@@ -1,4 +1,5 @@
 import Octokit from '../src/integrations/Octokit';
+const dotenv = require('dotenv').config();
 
 describe('Octokit', () => {
   const GH_TOKEN = process.env.GH_TOKEN;
