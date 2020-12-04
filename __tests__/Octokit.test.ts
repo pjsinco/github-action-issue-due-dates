@@ -2,8 +2,8 @@ import Octokit from '../src/integrations/Octokit';
 
 describe('Octokit', () => {
   const GH_TOKEN = process.env.GH_TOKEN;
-  const TEST_REPO_AUTHOR = 'alexleventer';
-  const TEST_REPO_NAME = 'github-issue-due-dates';
+  const TEST_REPO_AUTHOR = 'pjsinco';
+  const TEST_REPO_NAME = 'github-action-issue-due-dates';
 
   if (!GH_TOKEN) {
     throw new Error('Cannot run tests without GH_TOKEN environment variable');
