@@ -20,7 +20,7 @@ export const run = async () => {
       const daysUtilDueDate = await datesToDue(issue.due);
       if (daysUtilDueDate <= 7 && daysUtilDueDate > 0) {
         await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [NEXT_WEEK_TAG_NAME]);
-      } else if (daysUtilDueDate <= 0) {
+      } else if (daysUtilDueDate < 0) {
         await ok.removeLabelFromIssue(context.repo.owner, context.repo.repo, NEXT_WEEK_TAG_NAME, issue.number);
         await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [OVERDUE_TAG_NAME]);
       }
