@@ -47,12 +47,13 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const issues = yield ok.listAllOpenIssues(github_1.context.repo.owner, github_1.context.repo.repo);
         const results = yield ok.getIssuesWithDueDate(issues);
         for (const issue of results) {
-            console.log(`${issue.title} - Due: ${issue.due ? issue.due : 'Not set'}`);
-            const daysUtilDueDate = yield dateUtils_1.datesToDue(issue.due);
-            if (daysUtilDueDate <= 7 && daysUtilDueDate > 0) {
+            core.info(`${issue.title} - Due: ${issue.due ? issue.due : 'Not set'}`);
+            const daysUntilDueDate = yield dateUtils_1.datesToDue(issue.due);
+            core.info(`daysUntilDueDate: ${daysUntilDueDate}`);
+            if (daysUntilDueDate <= 7 && daysUntilDueDate > 0) {
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.NEXT_WEEK_TAG_NAME]);
             }
-            else if (daysUtilDueDate < 0) {
+            else if (daysUntilDueDate < 0) {
                 yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.NEXT_WEEK_TAG_NAME, issue.number);
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.OVERDUE_TAG_NAME]);
             }

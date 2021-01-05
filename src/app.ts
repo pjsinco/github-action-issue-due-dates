@@ -16,11 +16,16 @@ export const run = async () => {
     const issues = await ok.listAllOpenIssues(context.repo.owner, context.repo.repo);
     const results = await ok.getIssuesWithDueDate(issues);
     for (const issue of results) {
-      console.log(`${issue.title} - Due: ${issue.due ? issue.due : 'Not set'}`);
-      const daysUtilDueDate = await datesToDue(issue.due);
-      if (daysUtilDueDate <= 7 && daysUtilDueDate > 0) {
+
+      core.info(`${issue.title} - Due: ${issue.due ? issue.due : 'Not set'}`);
+
+      const daysUntilDueDate = await datesToDue(issue.due);
+
+      core.info(`daysUntilDueDate: ${daysUntilDueDate}`);
+
+      if (daysUntilDueDate <= 7 && daysUntilDueDate > 0) {
         await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [NEXT_WEEK_TAG_NAME]);
-      } else if (daysUtilDueDate < 0) {
+      } else if (daysUntilDueDate < 0) {
         await ok.removeLabelFromIssue(context.repo.owner, context.repo.repo, NEXT_WEEK_TAG_NAME, issue.number);
         await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [OVERDUE_TAG_NAME]);
       }
