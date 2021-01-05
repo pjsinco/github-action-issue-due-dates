@@ -28,3 +28,4 @@ jobs:
 4. Add the following environment variable to your repository secrets: `GH_TOKEN={{your personal access token}}`.
 
 hi
+hello
